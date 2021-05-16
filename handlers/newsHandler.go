@@ -8,16 +8,18 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/gorilla/mux"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
+// request example: localhost:8080
 func NewsHandler(rw http.ResponseWriter, r *http.Request) {
-	// vars := mux.Vars(r)
+
 	rw.WriteHeader(http.StatusOK)
-	// fmt.Println("Hello news vars: %v", vars)
 
 	// Instantiate a new client object
 	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb+srv://dbUser:GoSportsNews12@cluster0.1sizp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"))
@@ -68,4 +70,52 @@ func NewsHandler(rw http.ResponseWriter, r *http.Request) {
 
 	// Write json as response output to client
 	rw.Write(j)
+}
+
+// request example: localhost:8080/60a17bd9ee66d623b178a1ef
+func IndividualNewsArticleHandler(rw http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	rw.WriteHeader(http.StatusOK)
+	fmt.Fprintf(rw, "News Article Id: %v\n", vars["id"])
+
+	// Instantiate a new client object
+	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb+srv://dbUser:GoSportsNews12@cluster0.1sizp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Instantiate a new context object
+	ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
+
+	// connect to mongoDB
+	err = client.Connect(ctx)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer client.Disconnect(ctx)
+
+	// Check the connection with a ping
+	err = client.Ping(ctx, readpref.Primary())
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	/*
+		------ Insert data into MongoDB -----
+	*/
+	// Access 'articles' collection within the mongoDB 'news' database
+	collection := client.Database("news").Collection("articles")
+
+	objID, _ := primitive.ObjectIDFromHex(vars["id"])
+	value := collection.FindOne(ctx, bson.M{"_id": objID})
+
+	rawResult, err := value.DecodeBytes()
+
+	// Marshal data into a JSON string
+	j, err := json.Marshal(rawResult.String())
+
+	// Write json as response output to client
+	rw.Write(j)
+
 }
