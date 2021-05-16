@@ -39,4 +39,8 @@ func main() {
 
 	fmt.Println(databases)
 
+	collection := client.Database("news").Collection("articles")
+
+	fmt.Println(collection)
+
 }
