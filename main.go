@@ -8,13 +8,13 @@ import (
 	"log"
 	"time"
 
+	"github.com/jasonlvhit/gocron"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
-func main() {
-
+func newsletterFeed() {
 	/*
 		------ Insert into Database ------
 	*/
@@ -53,7 +53,7 @@ func main() {
 	var newListInfo pkg.NewListInformation
 
 	// Get the response data for 50 news articles
-	resp, err := pkg.GetNewsArticles("50")
+	resp, err := pkg.GetNewsArticles("10")
 	if err != nil {
 		fmt.Errorf("error: %v", err)
 	}
@@ -76,5 +76,11 @@ func main() {
 		fmt.Println("new record id: ", id)
 
 	}
+}
 
+func main() {
+	// Run task every 5 seconds
+	gocron.Every(5).Seconds().Do(newsletterFeed)
+	// Start all the pending jobs
+	<-gocron.Start()
 }

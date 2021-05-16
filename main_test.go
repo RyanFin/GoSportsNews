@@ -77,3 +77,43 @@ func TestDatabaseInsertion(t *testing.T) {
 	id := res.InsertedID
 	fmt.Println("new record id: ", id)
 }
+
+// func TestDeleteMultipleDocs(t *testing.T) {
+// 	// Instantiate a new client object
+// 	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb+srv://dbUser:GoSportsNews12@cluster0.1sizp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"))
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+
+// 	// Instantiate a new context object
+// 	ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
+
+// 	// connect to mongoDB
+// 	err = client.Connect(ctx)
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+
+// 	defer client.Disconnect(ctx)
+
+// 	// Check the connection with a ping
+// 	err = client.Ping(ctx, readpref.Primary())
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+
+// 	// Access 'articles' collection within the mongoDB 'news' database
+// 	collection := client.Database("news").Collection("articles")
+
+// 	// delete all where taxonomies eq ?
+// 	collection.DeleteMany(ctx, bson.M{"taxonomies": "First Team"})
+// 	collection.DeleteMany(ctx, bson.M{"taxonomies": "Club News"})
+// 	collection.DeleteMany(ctx, bson.M{"taxonomies": "Video"})
+// 	collection.DeleteMany(ctx, bson.M{"taxonomies": "Community"})
+// 	collection.DeleteMany(ctx, bson.M{"taxonomies": "Players"})
+// 	collection.DeleteMany(ctx, bson.M{"taxonomies": "Interviews"})
+// 	collection.DeleteMany(ctx, bson.M{"taxonomies": "Brentford B Team"})
+// 	collection.DeleteMany(ctx, bson.M{"taxonomies": "Galleries"})
+// 	collection.DeleteMany(ctx, bson.M{"taxonomies": "Match Reports"})
+
+// }
