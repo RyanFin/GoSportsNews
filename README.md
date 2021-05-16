@@ -12,6 +12,7 @@
 - MongoDB Document deletion 2: https://www.mongodb.com/blog/post/quick-start-golang--mongodb--how-to-delete-documents
 - Get documents from MongoDB: https://www.mongodb.com/blog/post/mongodb-go-driver-tutorial
 - How to read MongoDB documents: https://www.mongodb.com/blog/post/quick-start-golang--mongodb--how-to-read-documents
+- Finding single documents by ID in MongoDB: https://stackoverflow.com/questions/54963232/mongo-go-driver-find-a-document-by-id
 
 ## Useful links
 - Making HTTP requests in Golang: https://blog.logrocket.com/making-http-requests-in-go/
