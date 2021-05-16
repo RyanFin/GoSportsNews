@@ -1,4 +1,4 @@
-package main
+package pkg
 
 import (
 	"context"
@@ -40,7 +40,7 @@ func TestUnmarshalXMLToStruct(t *testing.T) {
 	fmt.Println(newListInfo.ClubWebsiteURL)
 	fmt.Println(newListInfo.NewsletterNewsItems)
 	fmt.Println("-----")
-	fmt.Println(newListInfo.NewsletterNewsItems.NewsletterNewsItem[0])
+	fmt.Println(newListInfo.NewsletterNewsItems.NewsletterNewsItems[0])
 }
 
 func TestViewAllMongoDBDatabases(t *testing.T) {

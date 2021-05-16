@@ -1,4 +1,4 @@
-package main
+package pkg
 
 import (
 	"context"
@@ -22,8 +22,8 @@ type NewListInformation struct {
 	ClubName            string   `xml:"ClubName"`
 	ClubWebsiteURL      string   `xml:"ClubWebsiteURL"`
 	NewsletterNewsItems struct {
-		Text               string `xml:",chardata"`
-		NewsletterNewsItem []struct {
+		Text                string `xml:",chardata"`
+		NewsletterNewsItems []struct {
 			Text              string `xml:",chardata"`
 			ArticleURL        string `xml:"ArticleURL"`
 			NewsArticleID     string `xml:"NewsArticleID"`
@@ -111,7 +111,7 @@ func newsletterFeed() {
 	}
 
 	// For each newsletter
-	for _, newsLetter := range newListInfo.NewsletterNewsItems.NewsletterNewsItem {
+	for _, newsLetter := range newListInfo.NewsletterNewsItems.NewsletterNewsItems {
 
 		res, err := collection.InsertOne(ctx, newsLetter)
 		if err != nil {
