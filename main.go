@@ -80,7 +80,7 @@ func newsletterFeed() {
 
 func main() {
 	// Run task every 5 seconds
-	gocron.Every(15).Minutes().Do(newsletterFeed)
+	gocron.Every(2).Minutes().Do(newsletterFeed)
 	// Start all the pending jobs
 	<-gocron.Start()
 }
