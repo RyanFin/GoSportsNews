@@ -1,0 +1,17 @@
+.DS_Store
+._.DS_Store
+**/.DS_Store
+**/._.DS_Store
+node_modules
+
+### VisualStudioCode ###
+.vscode/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+**/.history
