@@ -43,4 +43,9 @@ func main() {
 
 	fmt.Println(collection)
 
+	// insert record into mongoDB
+	// res, err := collection.InsertOne(ctx, bson.D{{"name", "pi"}, {"value", 3.14159}})
+	// id := res.InsertedID
+	// fmt.Println("new record id: ", id)
+
 }
