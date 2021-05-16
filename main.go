@@ -14,7 +14,7 @@ func main() {
 	r.HandleFunc("/", handlers.NewsHandler)
 
 	http.Handle("/", r)
-	fmt.Println("Spotify Web App - listening for requests on port :8080 ...")
+	fmt.Println("GoSportsNews App - listening for requests on port :8080 ...")
 	port := ":8080"
 	http.ListenAndServe(port, r)
 }

@@ -2,12 +2,12 @@ package handlers
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
 	"time"
 
-	"github.com/gorilla/mux"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -15,9 +15,9 @@ import (
 )
 
 func NewsHandler(rw http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
+	// vars := mux.Vars(r)
 	rw.WriteHeader(http.StatusOK)
-	fmt.Println("Hello news vars: %v", vars)
+	// fmt.Println("Hello news vars: %v", vars)
 
 	// Instantiate a new client object
 	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb+srv://dbUser:GoSportsNews12@cluster0.1sizp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"))
@@ -63,4 +63,9 @@ func NewsHandler(rw http.ResponseWriter, r *http.Request) {
 		fmt.Println(i, ": ", e)
 	}
 
+	// Marshal data into a JSON string
+	j, err := json.Marshal(newsarticles)
+
+	// Write json as response output to client
+	rw.Write(j)
 }
