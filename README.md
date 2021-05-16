@@ -8,6 +8,8 @@
 - MongoDB Compass GUI: https://www.mongodb.com/try/download/compass
 - MongoDB InsertMany: https://pkg.go.dev/go.mongodb.org/mongo-driver/mongo#Collection.InsertMany
 - How to insert mongodb documents into mongodb using the golang driver: https://kb.objectrocket.com/mongo-db/how-to-insert-mongodb-documents-from-json-using-the-golang-driver-457
+- MongoDB Document deletion: https://docs.mongodb.com/compass/current/documents/delete/
+- MongoDB Document deletion 2: https://www.mongodb.com/blog/post/quick-start-golang--mongodb--how-to-delete-documents
 
 ## Useful links
 - Making HTTP requests in Golang: https://blog.logrocket.com/making-http-requests-in-go/
