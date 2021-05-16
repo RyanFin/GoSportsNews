@@ -15,6 +15,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
+// request example: localhost:8080
 func NewsHandler(rw http.ResponseWriter, r *http.Request) {
 
 	rw.WriteHeader(http.StatusOK)
@@ -70,6 +71,7 @@ func NewsHandler(rw http.ResponseWriter, r *http.Request) {
 	rw.Write(j)
 }
 
+// request example: localhost:8080/60a17bd9ee66d623b178a1ef
 func IndividualNewsArticleHandler(rw http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	rw.WriteHeader(http.StatusOK)
