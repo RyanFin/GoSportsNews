@@ -1,12 +1,13 @@
 package main
 
 import (
+	"RyanFin/GoSportsNews/pkg"
 	"context"
+	"encoding/xml"
 	"fmt"
 	"log"
 	"time"
 
-	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
@@ -14,38 +15,66 @@ import (
 
 func main() {
 
+	/*
+		------ Insert into Database ------
+	*/
+
+	// Instantiate a new client object
 	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb+srv://dbUser:GoSportsNews12@cluster0.1sizp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"))
 	if err != nil {
 		log.Fatal(err)
 	}
 
+	// Instantiate a new context object
 	ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
 
+	// connect to mongoDB
 	err = client.Connect(ctx)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	defer client.Disconnect(ctx)
+
+	// Check the connection with a ping
 	err = client.Ping(ctx, readpref.Primary())
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	databases, err := client.ListDatabaseNames(ctx, bson.M{})
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Println(databases)
-
+	/*
+		------ Insert data into MongoDB -----
+	*/
+	// Access 'articles' collection within the mongoDB 'news' database
 	collection := client.Database("news").Collection("articles")
 
 	fmt.Println(collection)
 
-	// insert record into mongoDB
-	// res, err := collection.InsertOne(ctx, bson.D{{"name", "pi"}, {"value", 3.14159}})
-	// id := res.InsertedID
-	// fmt.Println("new record id: ", id)
+	var newListInfo pkg.NewListInformation
+
+	// Get the response data for 50 news articles
+	resp, err := pkg.GetNewsArticles("50")
+	if err != nil {
+		fmt.Errorf("error: %v", err)
+	}
+
+	err = xml.Unmarshal([]byte(resp), &newListInfo)
+	if err != nil {
+		fmt.Errorf("error: %v", err)
+	}
+
+	// For each newsletter
+	for _, newsLetter := range newListInfo.NewsletterNewsItems.NewsletterNewsItem {
+
+		res, err := collection.InsertOne(ctx, newsLetter)
+		if err != nil {
+			fmt.Errorf("error: %v", err)
+		}
+
+		id := res.InsertedID
+
+		fmt.Println("new record id: ", id)
+
+	}
 
 }
